@@ -1,0 +1,429 @@
+; >>>            <<<
+; >>> Logo/Image <<<
+; >>>            <<<
+
+[Rainmeter]
+Update=10000
+
+[ReWall]
+Meter=Image
+ImageName=noble-insignia-ui1.png
+W=100
+;X=143
+;Y=347
+PreserveAspectRatio=1
+
+; >>>                       <<<
+; >>> Weekday and date/time <<<
+; >>>                       <<<
+
+[Rainmeter]
+Update=1000
+Author=Connect-R
+BackgroundMode=2
+SolidColor=0,0,0,1
+DynamicWindowSize=1
+AccurateText=1
+MouseScrollUpAction=[!SetVariable Scale "(#Scale#+#ScrollMouseIncrement#)"][!WriteKeyValue Variables Scale "(#Scale#+#ScrollMouseIncrement#)"][!Refresh] 
+MouseScrollDownAction=[!SetVariable Scale "(#Scale#-#ScrollMouseIncrement# < 0.5 ? 0.5 : #Scale#-#ScrollMouseIncrement#)"][!WriteKeyValue Variables Scale "(#Scale#-#ScrollMouseIncrement# < 0.5 ? 0.5 : #Scale#-#ScrollMouseIncrement#)"][!Refresh] 
+LeftMouseDoubleClickAction=!ToggleConfig "Mond\Settings" "Settings.ini"
+
+[Variables]
+@include=#@#Variables.inc
+@include2=#@#Language\Language.inc
+Scale=1.06
+
+;-------------------------------------------------------------
+;-------------------------------------------------------------
+
+[MeasureTime]
+Measure=Time
+Format="%#Format#:%M"
+
+[MeasureAmPm]
+Measure=Time
+Format="%p"
+
+[MeasureDay]
+Measure=Time
+Format=%A
+Substitute=#Date#
+
+[MeasureDate]
+Measure=Time
+Format=%B %d, %Y, %#Format#:%M
+Substitute=#Date#
+
+;-------------------------------------------------------------
+;-------------------------------------------------------------
+
+;[Meter24hClock]
+;Meter=String
+;MeasureName=MeasureTime
+;StringAlign=Left
+;StringCase=Upper
+;FontFace=OCR A
+;FontColor=#Color1#
+;FontSize=(32*#Scale#)
+;X=(0*#Scale#)
+;Y=(100*#Scale#)
+;Text="%1"
+;AntiAlias=1
+;Hidden=#Hidden#
+
+;[Meter12hClock]
+;Meter=String
+;MeasureName=MeasureTime
+;MeasureName2=MeasureAmPm
+;StringAlign=Left
+;StringCase=Upper
+;FontFace=OCR A
+;FontColor=#Color1#
+;FontSize=(32*#Scale#)
+;X=(0*#Scale#)r
+;Y=(0*#Scale#)r
+;Text="- %1 %2 -"
+;AntiAlias=1
+;Hidden=#Hidden2#
+
+[MeterDay]
+Meter=String
+MeasureName=MeasureDay
+StringAlign=Left
+StringCase=Upper
+FontFace=Milford Bold
+;FontColor=#Color1#
+FontColor=d0d0d0
+FontSize=(48*#Scale#)
+X=(0*#Scale#)
+Y=(0*#Scale#)
+Text="%1"
+;InlineSetting=CharacterSpacing | (10*#Scale#) | (10*#Scale#)
+AntiAlias=1
+DynamicVariables=1
+
+[MeterDate]
+Meter=String
+MeasureName=MeasureDate
+StringAlign=Left
+StringCase=Upper
+FontFace=Milford Condensed Bold
+;FontColor=#Color1#
+FontColor=a0a0a0
+;FontSize=(15*#Scale#)
+FontSize=20
+X=(0*#Scale#)
+Y=(95*#Scale#)
+Text="%1"
+AntiAlias=1
+
+; >>>          <<<
+; >>> Launcher <<<
+; >>>          <<<
+
+[Rainmeter]
+Update=10000
+BackgroundMode=1
+MiddleMouseUpAction=!Execute ["#CURRENTPATH#Apps.txt"]
+
+[Metadata]
+Name=Launcher
+Version=1.0
+
+[Variables]
+FontColorPassive=a0a0a0
+FontColorActive=ffffff
+FontFace=Milford Condensed Bold
+FontSize=20
+#StringEffect=SHADOW
+FontEffectColor=3a3a3a
+@include="Apps.txt"
+HeightSpacer=44
+
+;........................................................................
+;Apps (because the apps.txt thing didn't work)
+;........................................................................
+; One way to find an app path: pin the app to your Start menu, right-click it,
+; then select More > Open File Location. When the file browser appears,
+; right-click in the address bar at the top and select Copy.
+
+App1=BRAVE
+App1Path="C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe" 
+
+App2=EXPLORER
+App2Path=""
+
+App3=SLACK
+App3Path=""
+
+App4=DISCORD
+App4Path=""
+
+App5="EPIC"
+App5Path=""
+
+App6="STEAM"
+App6Path=""
+
+;........................................................................
+;Meters
+;........................................................................
+
+; ===========App1===========
+
+[AppButton1Passive]
+Meter=STRING
+x=4
+y=0
+SolidColor=0,0,0,1
+Text=#App1#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorPassive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+MouseOverAction=!Execute [!ShowMeter AppBox1][!ShowMeter AppButton1Active][!HideMeter AppButton1Passive][!Update]
+
+[AppButton1Active]
+Meter=STRING
+x=4
+y=0
+SolidColor=0,0,0,1
+Text=#App1#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorActive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+Hidden=1
+LeftMouseUpAction=!Execute ["#App1Path#"][!ShowMeter AppButton1Passive][!HideMeter AppButton1Active][!Update]
+MouseLeaveAction=!Execute [!ShowMeter AppButton1Passive][!HideMeter AppButton1Active][!HideMeter AppBox1][!Update]
+
+[AppBox1]
+Meter=Shape
+Shape=Rectangle 0,0,617,32 | Fill LinearGradient BoxFillGradient | StrokeWidth 0
+BoxFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.005 | 100,100,100,110 ; 0.005 | 100,100,100,110 ; 1.0
+;Hidden=1
+; ^ uncomment this line to prevent the background box from appearing on login
+
+; ===========App2===========
+
+[AppButton2Passive]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*1)
+SolidColor=0,0,0,1
+Text=#App2#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorPassive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+MouseOverAction=!Execute [!ShowMeter AppBox2][!ShowMeter AppButton2Active][!HideMeter AppButton2Passive][!Update]
+
+[AppButton2Active]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*1)
+SolidColor=0,0,0,1
+Text=#App2#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorActive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+Hidden=1
+LeftMouseUpAction=!Execute ["#App2Path#"][!ShowMeter AppButton2Passive][!HideMeter AppButton2Active][!Update]
+MouseLeaveAction=!Execute [!ShowMeter AppButton2Passive][!HideMeter AppBox2][!HideMeter AppButton2Active][!Update]
+
+[AppBox2]
+Meter=Shape
+Shape=Rectangle 0,#HeightSpacer#,617,32 | Fill LinearGradient BoxFillGradient | StrokeWidth 0
+BoxFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.005 | 100,100,100,110 ; 0.005 | 100,100,100,110 ; 1.0
+Hidden=1
+
+; ===========App3===========
+
+[AppButton3Passive]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*2)
+SolidColor=0,0,0,1
+Text=#App3#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorPassive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+MouseOverAction=!Execute [!ShowMeter AppBox3][!ShowMeter AppButton3Active][!HideMeter AppButton3Passive][!Update]
+
+[AppButton3Active]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*2)
+SolidColor=0,0,0,1
+Text=#App3#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorActive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+Hidden=1
+LeftMouseUpAction=!Execute ["#App3Path#"][!ShowMeter AppButton3Passive][!HideMeter AppButton3Active][!Update]
+MouseLeaveAction=!Execute [!ShowMeter AppButton3Passive][!HideMeter AppButton3Active][!HideMeter AppBox3][!Update]
+
+[AppBox3]
+Meter=Shape
+Shape=Rectangle 0,(#HeightSpacer#*2),617,32 | Fill LinearGradient BoxFillGradient | StrokeWidth 0
+BoxFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.005 | 100,100,100,110 ; 0.005 | 100,100,100,110 ; 1.0
+Hidden=1
+
+; ===========App4===========
+
+[AppButton4Passive]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*3)
+SolidColor=0,0,0,1
+Text=#App4#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorPassive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+MouseOverAction=!Execute [!ShowMeter AppBox4][!ShowMeter AppButton4Active][!HideMeter AppButton4Passive][!Update]
+
+[AppButton4Active]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*3)
+SolidColor=0,0,0,1
+Text=#App4#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorActive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+Hidden=1
+LeftMouseUpAction=!Execute ["#App4Path#"][!ShowMeter AppButton4Passive][!HideMeter AppButton4Active][!Update]
+MouseLeaveAction=!Execute [!ShowMeter AppButton4Passive][!HideMeter AppButton4Active][!HideMeter AppBox4][!Update]
+
+[AppBox4]
+Meter=Shape
+Shape=Rectangle 0,(#HeightSpacer#*3),617,32 | Fill LinearGradient BoxFillGradient | StrokeWidth 0
+BoxFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.005 | 100,100,100,110 ; 0.005 | 100,100,100,110 ; 1.0
+Hidden=1
+
+; ===========App5===========
+
+[AppButton5Passive]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*4)
+SolidColor=0,0,0,1
+Text=#App5#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorPassive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+MouseOverAction=!Execute [!ShowMeter AppBox5][!ShowMeter AppButton5Active][!HideMeter AppButton5Passive][!Update]
+
+[AppButton5Active]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*4)
+SolidColor=0,0,0,1
+Text=#App5#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorActive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+Hidden=1
+LeftMouseUpAction=!Execute ["#App5Path#"][!ShowMeter AppButton5Passive][!HideMeter AppButton5Active][!Update]
+MouseLeaveAction=!Execute [!ShowMeter AppButton5Passive][!HideMeter AppButton5Active][!HideMeter AppBox5][!Update]
+
+[AppBox5]
+Meter=Shape
+Shape=Rectangle 0,(#HeightSpacer#*4),617,32 | Fill LinearGradient BoxFillGradient | StrokeWidth 0
+BoxFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.005 | 100,100,100,110 ; 0.005 | 100,100,100,110 ; 1.0
+Hidden=1
+
+; ===========App6===========
+
+[AppButton6Passive]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*5)
+SolidColor=0,0,0,1
+Text=#App6#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorPassive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+MouseOverAction=!Execute [!ShowMeter AppBox6][!ShowMeter AppButton6Active][!HideMeter AppButton6Passive][!Update]
+
+[AppButton6Active]
+Meter=STRING
+x=4
+y=(#HeightSpacer#*5)
+SolidColor=0,0,0,1
+Text=#App6#
+FontFace=#FontFace#
+FontSize=#FontSize#
+FontColor=#FontColorActive#
+StringAlign=LEFT
+StringEffect=#StringEffect#
+FontEffectColor=#FontEffectColor#
+AntiAlias=1
+Hidden=1
+LeftMouseUpAction=!Execute ["#App6Path#"][!ShowMeter AppButton6Passive][!HideMeter AppButton6Active][!Update]
+MouseLeaveAction=!Execute [!ShowMeter AppButton6Passive][!HideMeter AppButton6Active][!HideMeter AppBox6][!Update]
+
+[AppBox6]
+Meter=Shape
+Shape=Rectangle 0,(#HeightSpacer#*5),617,32 | Fill LinearGradient BoxFillGradient | StrokeWidth 0
+BoxFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.005 | 100,100,100,110 ; 0.005 | 100,100,100,110 ; 1.0
+Hidden=1
+
+>>>                 <<<
+>>> Horizontal Line <<<
+>>>                 <<<
+
+[Rainmeter]
+Update=10
+
+[MeterLeft]
+Meter=Shape
+Shape=Rectangle 0,0,800,2 | Fill LinearGradient LeftFillGradient | StrokeWidth 0
+LeftFillGradient=0 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.57 | 150,150,150,0 ; 1.0
+
+[MeterRight]
+Meter=Shape
+Shape=Rectangle 0,0,800,2 | Fill LinearGradient RightFillGradient | StrokeWidth 0
+RightFillGradient=180 | 150,150,150,255 ; 0.0 | 150,150,150,255 ; 0.57 | 150,150,150,0 ; 1.0
+X=800
